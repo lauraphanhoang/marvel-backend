@@ -54,14 +54,14 @@ router.post("/user/login", async (req, res) => {
   try {
     const userFound = await User.findOne({ email: req.body.email });
     if (!userFound) {
-      res.status(400).json({ message: "email incorrect" });
+      res.status(400).json({ message: "wrong password or email" });
     }
 
     const newHash = SHA256(req.body.password + userFound.salt).toString(
       encBase64
     );
     if (userFound.hash !== newHash) {
-      res.status(400).json({ message: "wrong password" });
+      res.status(400).json({ message: "wrong password or email" });
     }
 
     return res.status(201).json({
