@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const User = require("../models/User");
@@ -9,9 +10,9 @@ const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 
 // POST pour créer un utilisateur
-router.post("/signup", async (req, res) => {
+router.post("/user/signup", async (req, res) => {
   try {
-    // console.log(req.body)
+    console.log(req.body);
 
     if (!req.body.username || !req.body.email || !req.body.password) {
       res.status(400).json({ message: "Missing parameters" });
@@ -49,8 +50,9 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/user/login", async (req, res) => {
   try {
+    const userFound = await User.findOne({ email: req.body.email });
     if (!userFound) {
       res.status(400).json({ message: "email incorrect" });
     }
@@ -65,7 +67,7 @@ router.post("/login", async (req, res) => {
     return res.status(201).json({
       id: userFound._id,
       token: userFound.token,
-      account: userFound.account,
+      username: userFound.username,
     });
   } catch (error) {
     console.log(error);

@@ -17,9 +17,11 @@ const encBase64 = require("crypto-js/enc-base64");
 //import de mes routers
 const characterRouter = require("./routes/character");
 const comicRouter = require("./routes/comic");
+const userRouter = require("./routes/user");
 
 app.use(characterRouter);
 app.use(comicRouter);
+app.use(userRouter);
 
 app.get("/", (req, res) => {
   try {

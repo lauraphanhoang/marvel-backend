@@ -19,7 +19,7 @@ router.get("/characters", async (req, res) => {
     const response = await axios.get(
       `https://lereacteur-marvel-api.herokuapp.com/characters?apiKey=${process.env.API_KEY}${filters}`
     );
-    res.json(response.data);
+    return res.json(response.data);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
